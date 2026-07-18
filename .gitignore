@@ -1,0 +1,19 @@
+# 실행 산물 (재현셋은 GitHub Release로 태깅 권장)
+*.db
+experiments/*/results/seed_*.json
+experiments/*/results/*_report.json
+experiments/*/evidence_*.zip
+experiments/*/protocol_freeze.json
+experiments/*/audit_summary.json
+experiments/*/V17_confirmatory_report.md
+
+# 파이썬
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS/에디터
+.DS_Store
+.idea/
+.vscode/

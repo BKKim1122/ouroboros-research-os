@@ -1,0 +1,10 @@
+# V17 실행 설정 (run_seed.py가 읽음)
+# mock: true  → 가짜 백엔드로 파이프라인만 검증 (확증 단계에서는 cli가 거부)
+# mock: false → 실모델. torch + transformers 필요, GPU 권장
+# 주의: 이 파일은 동결 대상이다. 동결(FREEZE_GATE) 이후 수정하면
+#       freeze.verify가 잡아내어 확증실험이 무효 처리된다. 값은 동결 전에 확정할 것.
+mock: false
+model: "Qwen/Qwen2.5-1.5B"     # base 모델. E6 판정 기준. 비교용: Qwen/Qwen2.5-1.5B-Instruct
+revision: "8faed761d45a263340a0528343f099c05c9a4323"  # HF 스냅샷 커밋 고정 (재현성)
+layer_frac: 0.43               # = int(28*0.43)=layer 12. projection_gap 기준을 잰 층. 변경 금지.
+alpha: 8.0                     # steering 강도. 본 실험(emergence)에서는 기술통계로만 쓰이고 판정 무관.

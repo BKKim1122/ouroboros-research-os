@@ -1,0 +1,35 @@
+experiment_id: V17.5-projection-robustness
+phase: exploratory            # V17 동결 밖의 강건성 분석. 새 확증 아님.
+question: >
+  V17의 projection_gap(+0.397)은 '4요인 방향의 산술평균 1축(rank-1)'만 제거한
+  값이다. 공유구조를 rank-k로 일반화해 제거해도 요인정보 잔여(C3)가 남는가,
+  아니면 저차원 공유공간의 아티팩트인가? (외부검토 약한고리 C 대응)
+
+competing_models:
+  - MC1_rank1_shared          # gap이 k=1에서 소멸 → C3는 평균축 artifact
+  - MC2_lowrank_shared        # gap이 k=2~3에서 소멸 → 공유공간 저차원, C3 약화
+  - MC3_factor_residual       # top-k 제거 후 비영점 plateau + random 대비 우위 → C3 강건
+
+discriminating_predictions:
+  - "MC1 반박: k=1 제거 후에도 gap > 0.05 유지"
+  - "MC2 반박: k>=2 전 구간에서 gap > 0.05 유지"
+  - "MC3 지지: plateau gap이 동일차원 random 부분공간 제거 대비 유의 우위(>0.05)"
+
+method_notes: >
+  방향 추출은 V17과 동일(요인별 A_train 극성 평균차, 정규화).
+  공유 부분공간 U_k는 test seed를 제외한 나머지 seed 방향들의 SVD로 추정(교차검증),
+  held-out test seed 활성치에서 제거 후 gap 측정. 동일 차원 random 정규직교
+  부분공간 제거를 대조로 병행. 평균 미제거 SVD(공유 성분 보존).
+
+claim_ceiling:
+  allowed_statement: >
+    (MC3인 경우) V17의 공유축 제거 후 잔여 요인구조는 rank-1 아티팩트가 아니라
+    저차원 공유공간과 random 제거를 통제한 뒤에도 잔존한다 — 즉 C3의 강건성 상향.
+  forbidden_statements:
+    - 잔여 구조의 경계가 4요인 분류와 일치한다 (V18 과제)
+    - 잔여 구조가 self-특이적이다 (self/other 상호작용 실험 필요)
+    - 이 구조가 nuisance(주제/감정가/격식/evidentiality)와 독립이다 (약한고리 A 미해결)
+
+notes: >
+  이 분석은 nuisance 교란(약한고리 A)과 seed 비독립(약한고리 B)을 통제하지 않는다.
+  따라서 MC3가 나와도 'self-특이'가 아니라 'C3가 rank-1 아티팩트는 아님'까지만 말한다.

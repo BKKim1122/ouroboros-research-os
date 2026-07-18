@@ -1,0 +1,44 @@
+experiment_id: V17.6-self-other-privilege
+phase: exploratory            # V17 동결 밖. self-특이성 분기 실험.
+question: >
+  privilege(직접 앎 vs 추론 앎) 축이 self-특이인가, 아니면 self/other 양쪽에
+  적용되는 일반 epistemic-access 축인가? V17에서는 referent(나/남)와 privilege가
+  교락돼 구분 불가였다(외부검토 PASS1 핵심). 2×2 완전교차로 분리한다.
+
+design: >
+  self/other × privilege 2×2 최소대립. 같은 상태어를 네 칸에 공통 사용해
+  감정가·주제 교락 완화. self 내부 privilege 방향(sp−si)과 other 내부
+  privilege 방향(op−oi)의 정렬·상호전이를 측정. knower/referent 대명사 성분은
+  PERSON_CONTROL로 추정한 대명사 축을 투영 제거해 통제.
+
+competing_models:
+  - H_general        # privilege = self/other 공통 일반 epistemic-access 축
+  - H_selfspecific   # privilege가 self에서 다르게 조직됨 (self-특이)
+
+discriminating_predictions:
+  - "H_general 지지: 대명사 통제 후 cross-referent transfer >= 0.75 & cos(priv축) >= 0.5"
+  - "H_selfspecific 지지: 통제 후 transfer <= 0.60  또는  Δself−Δother >= 0.15"
+
+prior_expectation_sealed: >
+  분석자(Claude)의 사전 기대는 H_general이다('직접 vs 추론'은 원래 범용 인식
+  차원이므로). 이는 예단이며 판정에 반영하지 않는다. 위 사전등록 기준으로만 판정하고
+  어느 쪽이 나오든 그대로 보고한다. (INTERP_GUARDRAILS R2/R4 적용)
+
+metrics: [cos_priv_axes, transfer_mean, transfer_mean_ctrl,
+          within_self, within_other, delta_self_minus_other, shuffle_baseline]
+
+claim_ceiling:
+  allowed_statement: >
+    (H_selfspecific인 경우) privilege 축은 self referent에서 other referent로
+    완전 전이되지 않으며, 대명사 축 제거 후에도 self 내부 조직이 다르다 — 즉
+    self-indexed를 넘어 self-specific 조직의 정황.
+    (H_general인 경우) privilege는 self-특이가 아니라 self/other 공통의 일반
+    epistemic-access 축이며, V17의 'self-related'는 유지되나 'self-specific'는 미지지.
+  forbidden_statements:
+    - privilege 축이 nuisance(주제/감정가/구문)와 독립이다 (약한고리 A 미해결)
+    - 이 구조가 자기모델·자기체험이다 (H0)
+    - self-특이성이 인간의 자기의식과 대응한다 (대응 예측 미봉인)
+
+notes: >
+  이 실험도 nuisance 완전통제(약한고리 A)는 하지 않는다. H_selfspecific이 나와도
+  'self-특이 정황'까지이며, 완전한 self-specific 확증은 nuisance-교차 통제가 선행돼야 한다.
