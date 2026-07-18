@@ -1,0 +1,7 @@
+{
+  "audit": "PASS",
+  "problems": [],
+  "devices": [
+    "cuda"
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "version": "V16-E.D1a",
+  "status": "EXPLORATORY_POST_CONFIRMATORY_DIAGNOSTIC",
+  "purpose": "Separate insufficient convergence from held-out operator-composition failure after the preregistered V16-E.C1 Gate FAIL.",
+  "source_experiment": "V16-E.C1",
+  "source_seeds": [16200,16201,16202,16203,16204,16205,16206,16207,16208,16209,16210,16211,16212,16213,16214,16215,16216,16217,16218,16219,16220,16221,16222,16223],
+  "model": "compositional only",
+  "extension": {
+    "from_steps": 1100,
+    "to_steps": 2600,
+    "all_seeds_extended_uniformly": true,
+    "resume_model_optimizer_generator_state": true,
+    "architecture_loss_lr_unchanged": true,
+    "original_C1_outputs_preserved": true
+  },
+  "evaluation": {
+    "episodes_per_condition_per_seed": 4000,
+    "conditions": ["id","encoding_ood","factor_ood","rule_ood"],
+    "primary_diagnostic_phases": ["continuity","allocation","protection"]
+  },
+  "interpretation": "D1a is exploratory and cannot convert the frozen C1 FAIL into PASS. It diagnoses whether additional uniform training repairs ID performance, held-out operator composition, both, or neither."
+}

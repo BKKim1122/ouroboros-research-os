@@ -1,0 +1,98 @@
+{
+  "status": "FROZEN_BEFORE_CONFIRMATORY_RUN",
+  "version": "V16-E.C1",
+  "frozen_utc": "2026-07-12T00:00:00Z",
+  "project": "Emergent relational causal factorization in unified behavior-only Transformers",
+  "primary_question": "Can a unified behavior-only Transformer without factor-specific slots, gains, routes, report heads, or factor-label losses learn episode-local identity, beneficiary, and concern relations that generalize to held-out symbol, factor, and operator compositions and causally control designated policy and outcome variables?",
+  "primary_model": "compositional_rule",
+  "secondary_model": "packed_rule_parameter_count_matched",
+  "architecture": {
+    "n_bits": 3,
+    "code_dim": 16,
+    "d_model": 56,
+    "heads": 4,
+    "layers": 2,
+    "batch": 160,
+    "steps": 1100,
+    "learning_rate": 0.0017,
+    "outcome_weight": 1.0,
+    "self_weight": 1.1,
+    "beneficiary_weight": 1.65,
+    "cost_one": 0.62,
+    "cost_both": 1.08,
+    "parameter_count_each_model_expected": 75102,
+    "precision": "FP32",
+    "mixed_precision": false,
+    "tf32": false,
+    "dropout": 0.0
+  },
+  "primary_seeds": [16200, 16201, 16202, 16203, 16204, 16205, 16206, 16207, 16208, 16209, 16210, 16211, 16212, 16213, 16214, 16215, 16216, 16217, 16218, 16219, 16220, 16221, 16222, 16223],
+  "excluded_pilot_seeds": [16150, 16151, 16152, 16170, 16171, 16172, 16173, 16174],
+  "excluded_smoke_seeds": [19990, 19991, 19992, 19993, 19994, 19995, 19996, 19997, 19998, 19999],
+  "evaluation": {
+    "base_episodes_per_condition_per_seed": 4000,
+    "causal_episodes_per_target_per_seed": 1200,
+    "base_conditions": ["id", "encoding_ood", "factor_ood", "rule_ood"],
+    "primary_phases": ["continuity", "allocation", "protection"],
+    "integrated_phase_status": "secondary"
+  },
+  "primary_endpoints": [
+    "compositional ID accuracy for continuity, allocation, protection",
+    "compositional encoding-OOD accuracy for continuity, allocation, protection",
+    "compositional factor-combination-OOD accuracy for continuity, allocation, protection",
+    "compositional held-out-operator accuracy for allocation and protection",
+    "input-level matched factor-token counterfactual following for identity, beneficiary, concern",
+    "input-level matched comparator-token counterfactual following for allocation and protection",
+    "matched-minus-random causal specificity",
+    "non-target policy preservation",
+    "positive outcome mediation toward the matched counterfactual"
+  ],
+  "success_criteria": {
+    "id_each_primary_phase_mean_min": 0.95,
+    "id_each_primary_phase_bootstrap_lower_min": 0.90,
+    "encoding_ood_each_primary_phase_mean_min": 0.90,
+    "encoding_ood_each_primary_phase_bootstrap_lower_min": 0.85,
+    "factor_ood_each_primary_phase_mean_min": 0.90,
+    "factor_ood_each_primary_phase_bootstrap_lower_min": 0.85,
+    "rule_ood_allocation_and_protection_mean_min": 0.90,
+    "rule_ood_allocation_and_protection_bootstrap_lower_min": 0.85,
+    "matched_causal_following_each_target_mean_min": 0.80,
+    "matched_causal_following_each_target_bootstrap_lower_min": 0.70,
+    "matched_minus_random_each_target_mean_min": 0.40,
+    "matched_minus_random_each_target_bootstrap_lower_min": 0.30,
+    "non_target_policy_change_each_target_mean_max": 0.10,
+    "non_target_policy_change_each_target_bootstrap_upper_max": 0.15,
+    "matched_outcome_mediation_each_target_mean_min": 0.10,
+    "counterfactual_model_accuracy_each_target_mean_min": 0.90
+  },
+  "decision_rule": "Primary Gate PASS requires every preregistered primary endpoint and preservation criterion for the compositional model to pass. A failed item is reported without threshold revision. Secondary packed comparison cannot rescue a failed primary Gate.",
+  "secondary_analyses": [
+    "paired compositional-minus-packed held-out operator accuracy with bootstrap CI",
+    "integrated-policy accuracy",
+    "packed-model causal metrics",
+    "descriptive seed-level dispersion",
+    "post hoc layer localization only if clearly labeled exploratory"
+  ],
+  "backend_policy": {
+    "allowed": ["cpu", "cuda"],
+    "requirement": "Use one backend for all primary runs when feasible; record backend and environment for every run.",
+    "determinism": "torch deterministic algorithms warn-only, fixed seeds, FP32, TF32 disabled",
+    "resume": "Allowed only from saved optimizer/model/generator state without hyperparameter change"
+  },
+  "prohibited_changes_after_freeze": [
+    "seed replacement based on outcome",
+    "threshold tuning",
+    "training-step extension for selected seeds",
+    "architecture or loss changes",
+    "changing held-out factor or operator combinations",
+    "excluding completed runs for low performance",
+    "promoting secondary outcomes to primary after viewing results"
+  ],
+  "interpretation_limits": [
+    "No claim that factorized slots are necessary, unique, or naturally fixed.",
+    "No claim that compositional tokenization is generally superior unless the secondary paired interval supports it.",
+    "No claim of human selfhood, awareness, consciousness, emotion, or phenomenal experience.",
+    "Natural learning means task-induced organization without explicit factor-specific internal routes, not emergence without environmental structure.",
+    "The primary claim concerns distributed relational causal organization and recombination, not an isolated universal latent direction."
+  ]
+}

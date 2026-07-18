@@ -1,0 +1,10 @@
+{
+  "id": "V16-E.D1b",
+  "status": "post-D1a exploratory causal recheck",
+  "purpose": "Re-evaluate causal use of identity, beneficiary, concern, allocation operator, and protection operator after uniform extension to 2600 steps.",
+  "seeds": [16200,16201,16202,16203,16204,16205,16206,16207,16208,16209,16210,16211,16212,16213,16214,16215,16216,16217,16218,16219,16220,16221,16222,16223],
+  "contexts": ["train", "rule_ood"],
+  "episodes_per_target_seed": 1200,
+  "controls": ["matched", "random_norm"],
+  "interpretation": "D1b does not alter the preregistered C1 FAIL decision. It diagnoses whether causal structure persists after convergence repair and whether beneficiary failure is conditional on operator OOD."
+}

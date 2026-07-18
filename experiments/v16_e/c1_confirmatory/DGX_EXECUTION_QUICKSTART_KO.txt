@@ -1,0 +1,10 @@
+V16-E.C1 DGX 실행 순서
+
+1) cd V16-E.C1_DGX_CONFIRMATORY_20260712
+2) chmod +x run_all.sh scripts/*.sh
+3) DEVICE=cuda JOBS=1 THREADS=2 ./run_all.sh
+
+중단되면 동일 명령을 다시 실행한다. 완료 후 상위 폴더에 생성된
+V16-E.C1_DGX_RESULTS_*.tar.gz 파일을 회수한다.
+
+개별 단계 실행은 README.md 참고.

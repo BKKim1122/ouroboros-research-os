@@ -1,0 +1,9 @@
+{
+  "version": "V16-E.D1a",
+  "status": "exploratory_post_confirmatory",
+  "n_seeds": 24,
+  "id_allocation": 0.9869583745797476,
+  "rule_ood_allocation": 0.8310104441261501,
+  "rule_ood_protection": 0.9160000222424666,
+  "diagnostic_pattern": "convergence_repaired_compositionality_remains"
+}

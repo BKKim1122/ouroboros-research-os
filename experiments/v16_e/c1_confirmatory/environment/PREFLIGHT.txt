@@ -1,0 +1,114 @@
+UTC=2026-07-12T12:34:32Z
+HOST=edgexpert-bbc5
+Linux edgexpert-bbc5 6.17.0-1008-nvidia #8-Ubuntu SMP PREEMPT_DYNAMIC Wed Jan 21 17:56:56 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+--- OS ---
+PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+HOME_URL="https://www.ubuntu.com/"
+SUPPORT_URL="https://help.ubuntu.com/"
+BUG_REPORT_URL="https://bugs.launchpad.net/ubuntu/"
+PRIVACY_POLICY_URL="https://www.ubuntu.com/legal/terms-and-policies/privacy-policy"
+UBUNTU_CODENAME=noble
+LOGO=ubuntu-logo
+--- CPU/MEMORY ---
+아키텍처:                         aarch64
+CPU 동작 모드:                    64-bit
+바이트 순서:                      Little Endian
+CPU:                              20
+온라인 CPU 목록:                  0-19
+제조자 ID:                        ARM
+모델 이름:                        Cortex-X925
+모델:                             1
+코어 당 스레드:                   1
+소켓 당 코어 수:                  10
+소켓:                             1
+스테핑:                           r0p1
+주파수 가속:                      비활성
+CPU 스케일링 MHz:                 100%
+최대 CPU MHz:                     3900.0000
+최소 CPU MHz:                     1378.0000
+BogoMIPS:                         2000.00
+플래그:                           fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt
+모델 이름:                        Cortex-A725
+모델:                             1
+코어 당 스레드:                   1
+소켓 당 코어 수:                  10
+소켓:                             1
+스테핑:                           r0p1
+CPU 스케일링 MHz:                 100%
+최대 CPU MHz:                     2808.0000
+최소 CPU MHz:                     338.0000
+BogoMIPS:                         2000.00
+플래그:                           fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt
+L1d 캐시:                         1.3 MiB (인스턴스 20건)
+L1i 캐시:                         1.3 MiB (인스턴스 20건)
+L2 캐시:                          25 MiB (인스턴스 20건)
+L3 캐시:                          24 MiB (인스턴스 2건)
+NUMA 노드:                        1
+NUMA 노드0 CPU:                   0-19
+Gather data sampling 취약성:      Not affected
+Ghostwrite 취약성:                Not affected
+Indirect target selection 취약성: Not affected
+Itlb multihit 취약성:             Not affected
+L1tf 취약성:                      Not affected
+Mds 취약성:                       Not affected
+Meltdown 취약성:                  Not affected
+Mmio stale data 취약성:           Not affected
+Old microcode 취약성:             Not affected
+Reg file data sampling 취약성:    Not affected
+Retbleed 취약성:                  Not affected
+Spec rstack overflow 취약성:      Not affected
+Spec store bypass 취약성:         Mitigation; Speculative Store Bypass disabled via prctl
+Spectre v1 취약성:                Mitigation; __user pointer sanitization
+Spectre v2 취약성:                Mitigation; CSV2, BHB
+Srbds 취약성:                     Not affected
+Tsa 취약성:                       Not affected
+Tsx async abort 취약성:           Not affected
+Vmscape 취약성:                   Not affected
+               총계         사용        여분      공유    버퍼/캐시    가용
+메모리:        121Gi       7.5Gi       101Gi       299Mi        14Gi       114Gi
+스  왑:         15Gi          0B        15Gi
+--- GPU ---
+Sun Jul 12 21:34:32 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.126.09             Driver Version: 580.126.09     CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA GB10                    On  |   0000000F:01:00.0  On |                  N/A |
+| N/A   46C    P0             12W /  N/A  | Not Supported          |      4%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|    0   N/A  N/A            5446      G   /usr/lib/xorg/Xorg                      139MiB |
+|    0   N/A  N/A            5563    C+G   ...c/gnome-remote-desktop-daemon        176MiB |
+|    0   N/A  N/A            5643      G   /usr/bin/gnome-shell                    147MiB |
+|    0   N/A  N/A            6203      G   ...exec/xdg-desktop-portal-gnome         25MiB |
+|    0   N/A  N/A            6473      G   .../8386/usr/lib/firefox/firefox        216MiB |
+|    0   N/A  N/A            9355      G   /usr/bin/nautilus                        60MiB |
+|    0   N/A  N/A           14816      G   ...rack-uuid=3190708988185955192        110MiB |
++-----------------------------------------------------------------------------------------+
+--- PYTHON ---
+{
+  "python": "3.12.3 (main, Jan 22 2026, 20:57:42) [GCC 13.3.0]",
+  "platform": "Linux-6.17.0-1008-nvidia-aarch64-with-glibc2.39",
+  "torch": "2.13.0+cu130",
+  "cuda_available": true,
+  "cuda_runtime": "13.0",
+  "device_count": 1,
+  "device_name": "NVIDIA GB10",
+  "numpy": "2.5.1",
+  "pandas": "3.0.3"
+}

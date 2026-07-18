@@ -1,0 +1,2 @@
+contrast,n_seeds,mean_difference,ci_low,ci_high
+compositional_minus_packed_mean_rule_ood_allocation_protection,24,-0.03752604639642718,-0.12860482720849784,0.048330600068826786

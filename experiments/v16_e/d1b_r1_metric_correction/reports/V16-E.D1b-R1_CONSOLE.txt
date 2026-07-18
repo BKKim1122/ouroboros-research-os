@@ -1,0 +1,21 @@
+ context     rule_mode     kind      target                        patch  mean_policy_follow  min_policy_follow  mean_non_target_change  mean_outcome_mediation  mean_outcome_closer  total_conflicts
+rule_ood compositional   factor beneficiary       matched_relation_token            0.827009           0.000000                0.006267                0.326465             0.874450            21281
+rule_ood compositional   factor beneficiary   random_norm_relation_token            0.131414           0.018826                0.018663               -0.034369             0.534956            21281
+rule_ood compositional   factor     concern       matched_relation_token            0.910123           0.512061                0.003160                0.461088             0.890043            21414
+rule_ood compositional   factor     concern   random_norm_relation_token            0.059259           0.001111                0.006823               -0.054110             0.496436            21414
+rule_ood compositional   factor    identity       matched_relation_token            0.987922           0.857778                0.010677                0.953502             0.996981            21612
+rule_ood compositional   factor    identity   random_norm_relation_token            0.127974           0.019608                0.023698                0.132629             0.705186            21612
+rule_ood compositional operator  allocation     matched_comparator_token            0.987153           0.919167                0.042240                0.512905             0.912927            28800
+rule_ood compositional operator  allocation random_norm_comparator_token            0.322083           0.030000                0.031632               -0.094280             0.526031            28800
+rule_ood compositional operator  protection     matched_comparator_token            0.997282           0.958064                0.080694                0.710657             0.967411            14493
+rule_ood compositional operator  protection random_norm_comparator_token            0.286450           0.012903                0.029080                0.098291             0.661189            14493
+   train compositional   factor beneficiary       matched_relation_token            0.986027           0.906532                0.002118                0.702116             0.978154            21322
+   train compositional   factor beneficiary   random_norm_relation_token            0.094231           0.013746                0.015295                0.039352             0.565229            21322
+   train compositional   factor     concern       matched_relation_token            0.998679           0.986207                0.001007                0.766053             0.982442            21212
+   train compositional   factor     concern   random_norm_relation_token            0.021810           0.002304                0.004080                0.015015             0.544565            21212
+   train compositional   factor    identity       matched_relation_token            0.990662           0.868943                0.003125                0.955229             0.997231            21649
+   train compositional   factor    identity   random_norm_relation_token            0.128159           0.005525                0.015434                0.127349             0.704853            21649
+   train compositional operator  allocation     matched_comparator_token            0.933889           0.650000                0.014288                0.606326             0.949449            28800
+   train compositional operator  allocation random_norm_comparator_token            0.088333           0.025000                0.015729               -0.004829             0.532526            28800
+   train compositional operator  protection     matched_comparator_token            0.942601           0.656616                0.027344                0.777012             0.986909            14350
+   train compositional operator  protection random_norm_comparator_token            0.091486           0.037643                0.014601                0.119748             0.665177            14350

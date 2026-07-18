@@ -1,0 +1,115 @@
+{
+  "rows": 480,
+  "summary": [
+    {
+      "context": "rule_ood",
+      "kind": "factor",
+      "target": "beneficiary",
+      "mean_policy_follow": 0.8270088653080165,
+      "min_policy_follow": 0.0,
+      "mean_non_target_change": 0.19254630183180169,
+      "mean_outcome_mediation": 0.32646459325527155,
+      "random_policy_follow": 0.13141432528694466,
+      "matched_minus_random": 0.6955945400210719
+    },
+    {
+      "context": "rule_ood",
+      "kind": "factor",
+      "target": "concern",
+      "mean_policy_follow": 0.9101228788495064,
+      "min_policy_follow": 0.5120614171028137,
+      "mean_non_target_change": 0.09392361342906948,
+      "mean_outcome_mediation": 0.46108825302993256,
+      "random_policy_follow": 0.059258601046167265,
+      "matched_minus_random": 0.8508642778033391
+    },
+    {
+      "context": "rule_ood",
+      "kind": "factor",
+      "target": "identity",
+      "mean_policy_follow": 0.9879216079910597,
+      "min_policy_follow": 0.8577777743339539,
+      "mean_non_target_change": 0.1597106518844763,
+      "mean_outcome_mediation": 0.9535021210710207,
+      "random_policy_follow": 0.12797399369689322,
+      "matched_minus_random": 0.8599476142941664
+    },
+    {
+      "context": "rule_ood",
+      "kind": "operator",
+      "target": "allocation",
+      "mean_policy_follow": 0.9871527825792631,
+      "min_policy_follow": 0.9191666841506958,
+      "mean_non_target_change": 0.029282407563490112,
+      "mean_outcome_mediation": 0.5129047274434319,
+      "random_policy_follow": 0.322083334904164,
+      "matched_minus_random": 0.6650694476750991
+    },
+    {
+      "context": "rule_ood",
+      "kind": "operator",
+      "target": "protection",
+      "mean_policy_follow": 0.9972818220655123,
+      "min_policy_follow": 0.9580644965171814,
+      "mean_non_target_change": 0.05526620544454388,
+      "mean_outcome_mediation": 0.7106567900627851,
+      "random_policy_follow": 0.28645040541111183,
+      "matched_minus_random": 0.7108314166544005
+    },
+    {
+      "context": "train",
+      "kind": "factor",
+      "target": "beneficiary",
+      "mean_policy_follow": 0.9860272407531738,
+      "min_policy_follow": 0.906531572341919,
+      "mean_non_target_change": 0.18747685663402078,
+      "mean_outcome_mediation": 0.7021159393091997,
+      "random_policy_follow": 0.0942312503078331,
+      "matched_minus_random": 0.8917959904453407
+    },
+    {
+      "context": "train",
+      "kind": "factor",
+      "target": "concern",
+      "mean_policy_follow": 0.998679076631864,
+      "min_policy_follow": 0.9862068891525269,
+      "mean_non_target_change": 0.091527779897054,
+      "mean_outcome_mediation": 0.7660526360074679,
+      "random_policy_follow": 0.02181021532548277,
+      "matched_minus_random": 0.9768688613063812
+    },
+    {
+      "context": "train",
+      "kind": "factor",
+      "target": "identity",
+      "mean_policy_follow": 0.9906624133388201,
+      "min_policy_follow": 0.8689426779747009,
+      "mean_non_target_change": 0.15420139115303752,
+      "mean_outcome_mediation": 0.9552289173007011,
+      "random_policy_follow": 0.1281587391082818,
+      "matched_minus_random": 0.8625036742305383
+    },
+    {
+      "context": "train",
+      "kind": "operator",
+      "target": "allocation",
+      "mean_policy_follow": 0.9338888997832934,
+      "min_policy_follow": 0.6500000357627869,
+      "mean_non_target_change": 0.01016203747713002,
+      "mean_outcome_mediation": 0.6063260311881701,
+      "random_policy_follow": 0.08833333609315253,
+      "matched_minus_random": 0.8455555636901408
+    },
+    {
+      "context": "train",
+      "kind": "operator",
+      "target": "protection",
+      "mean_policy_follow": 0.9426008686423302,
+      "min_policy_follow": 0.6566163897514343,
+      "mean_non_target_change": 0.019583333817232967,
+      "mean_outcome_mediation": 0.7770120576024055,
+      "random_policy_follow": 0.09148630173876876,
+      "matched_minus_random": 0.8511145669035614
+    }
+  ]
+}
