@@ -17,7 +17,3 @@ venv/
 .DS_Store
 .idea/
 .vscode/
-
-# 재현 번들 (Release로 관리)
-*.tgz
-*.tar.gz

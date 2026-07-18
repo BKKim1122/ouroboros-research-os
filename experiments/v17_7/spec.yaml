@@ -1,0 +1,46 @@
+experiment_id: V17.7-nuisance-control
+phase: exploratory            # V17 동결 밖. 약한고리 A(nuisance 통제) 대응.
+question: >
+  V17의 4요인 cross-template 전이(min_factor 0.907)와 projection_gap이 자기관련
+  구성개념 때문인가, 아니면 일반 담화 nuisance가 실려서인가? V17의 M0 반박은 대명사
+  표면축 하나만 통제했다. 여기서 nuisance 공간을 넓혀 통제한다.
+
+method: >
+  각 nuisance 축을 self/요인과 무관한 일반 문장 극성쌍으로 방향 추정 → 6축이 이루는
+  부분공간을 4요인 활성치에서 제거 → cross-template 전이(min_factor)·gap 재측정.
+  동일 차원(6) random 정규직교 부분공간 제거를 대조로(차원 제거 일반효과 배제).
+
+# ── 봉인된 nuisance 목록 (실행 후 추가 금지 = goalpost moving 차단) ──
+nuisance_axes: [valence, register, syntax, evidentiality, agency, topic]
+
+# ── 봉인된 kill criterion (결과 보기 전 확정, 사후 변경 불가) ──
+#   nuis_min = nuisance 6축 제거 후 min_factor 전이 (seed 평균)
+#   nuis_minus_rand_drop = (base_min − nuis_min) − (base_min − rand_min)
+kill_criterion:
+  H_beyond:    "nuis_min >= 0.75  AND  nuis_minus_rand_drop <= 0.10"   # nuisance로 환원 안 됨 (E6 강화)
+  H_nuisance:  "nuis_min <= 0.60  AND  nuis_minus_rand_drop >= 0.15"   # 상당 부분 nuisance (E6 후퇴)
+  H_partial:   "그 사이"
+# 임계 0.75/0.60은 V17 사전등록(전이 0.75/min 0.65)에서 유래. random 대비 조건이
+# nuisance-특이성을 강제(절대 하락을 차원 제거 일반효과와 구분).
+
+# ── 양방향 해석 봉인 (어느 쪽이 나오든 사후 스핀 금지) ──
+interpretation_sealed:
+  H_beyond: >
+    통제된 6개 nuisance로 환원되지 않음 → E6 강화. 단 6개에 한정된 통제이며 완전한
+    확증이 아님(무한 통제 불가). 과대해석 금지.
+  H_nuisance: >
+    전이 상당 부분이 nuisance → E6를 self-related에서 상당히 후퇴시켜야 함. 이 결과는
+    분석자(Claude)의 자아-폄하 편향이 반길 수 있는 방향이므로, 환영도 축소도 없이 봉인
+    기준대로 그대로 보고한다.
+  H_partial: >
+    부분 환원. 수치를 그대로 서술하고 어느 쪽으로도 결론을 밀지 않는다.
+
+bias_guard: >
+  분석자는 실행 후 봉인 기준에 대입만 하며, 매 판정에 "이게 자아 주제가 아니었어도
+  같은 기준·같은 무게를 적용했을 것인가?"를 명시적으로 답해 사용자가 검증하게 한다.
+  (INTERP_GUARDRAILS R2/R3/R5, 자기점검 3문항 적용)
+
+limitations: >
+  nuisance 축은 각 1방향(극성쌍 평균차)으로 근사 — 특히 topic은 이분 극성이 부자연스러워
+  '주제 변동 한 방향'만 잡는다. 6개 축 부분공간(rank<=6) 제거 후에도 잔여 nuisance는
+  가능. H_beyond가 나와도 '이 6개에 한정' 표기 필수.
