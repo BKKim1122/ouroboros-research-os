@@ -1,0 +1,11 @@
+{
+  "timestamp_utc": "2026-07-12T01:11:35.193857+00:00",
+  "python": "3.13.5 (main, May  5 2026, 21:05:52) [GCC 14.2.0]",
+  "platform": "Linux-4.4.0-x86_64-with-glibc2.41",
+  "torch": "2.10.0+cpu",
+  "cuda_available": false,
+  "sklearn": "1.8.0",
+  "scipy": "1.17.0",
+  "pandas": "2.2.3",
+  "numpy": "2.3.5"
+}

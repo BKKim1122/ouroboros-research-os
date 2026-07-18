@@ -1,0 +1,13 @@
+condition,layer,factor,seed,probe_bacc,cross_context_bacc
+unified_multitask,0,beneficiary,16122.0,0.5,0.5
+unified_multitask,0,concern,16122.0,0.5,0.5
+unified_multitask,0,identity,16122.0,0.5,0.5
+unified_multitask,1,beneficiary,16122.0,1.0,0.524949083503055
+unified_multitask,1,concern,16122.0,1.0,0.9668903023438181
+unified_multitask,1,identity,16122.0,0.9992585269401879,0.5
+unified_multitask,2,beneficiary,16122.0,1.0,0.9877800407331976
+unified_multitask,2,concern,16122.0,1.0,1.0
+unified_multitask,2,identity,16122.0,1.0,0.9970817120622568
+unified_multitask,3,beneficiary,16122.0,1.0,0.9872708757637474
+unified_multitask,3,concern,16122.0,1.0,1.0
+unified_multitask,3,identity,16122.0,1.0,0.9970817120622568

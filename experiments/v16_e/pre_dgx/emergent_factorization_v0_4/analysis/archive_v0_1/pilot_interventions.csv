@@ -1,0 +1,4 @@
+seed,condition,layer,factor,conflict_n,counterfactual_follow,random_follow,target_probe_transfer,offtarget_probe_stability,world_prediction_stability,policy_change_rate,cf_policy_change_rate
+16120,unified_multitask,1,identity,1644,0.0,0.0006082725060827251,0.498,0.9995,0.9998888888888889,0.0,0.548
+16120,unified_multitask,1,beneficiary,1903,0.0,0.0,0.5113333333333333,0.9993333333333334,0.9995,0.0,0.6343333333333333
+16120,unified_multitask,1,concern,1766,0.04699886749716874,0.0033975084937712344,1.0,0.6305000000000001,0.9568333333333333,0.050666666666666665,0.5886666666666667

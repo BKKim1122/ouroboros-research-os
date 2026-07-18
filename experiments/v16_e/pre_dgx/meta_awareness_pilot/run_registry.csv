@@ -1,0 +1,7 @@
+condition,seed,start_utc,end_utc,duration_s,status,error,run_dir
+full_monitor,16100,2026-07-11T23:37:54Z,2026-07-11T23:38:06Z,11.591,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/full_monitor_seed16100
+full_monitor,16101,2026-07-11T23:38:15Z,2026-07-11T23:38:27Z,11.604,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/full_monitor_seed16101
+full_monitor,16102,2026-07-11T23:38:37Z,2026-07-11T23:38:48Z,11.434,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/full_monitor_seed16102
+blind_cue_control,16100,2026-07-11T23:39:00Z,2026-07-11T23:39:12Z,11.524,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/blind_cue_control_seed16100
+blind_cue_control,16101,2026-07-11T23:39:23Z,2026-07-11T23:39:34Z,11.649,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/blind_cue_control_seed16101
+blind_cue_control,16102,2026-07-11T23:39:46Z,2026-07-11T23:39:59Z,12.156,success,,/mnt/data/v16_attention_meta_awareness/raw/pilot/blind_cue_control_seed16102

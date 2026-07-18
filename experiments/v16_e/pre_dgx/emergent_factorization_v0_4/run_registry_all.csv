@@ -1,0 +1,13 @@
+run_id,phase,condition,seed,finished_utc,elapsed_s,train_steps,checkpoint,status
+unified_behavior_only_seed16120,v0_2,unified_behavior_only,16120,2026-07-12T01:14:57.474839+00:00,18.53324246406555,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_behavior_only_seed16120/checkpoint.pt,completed
+unified_behavior_only_seed16121,v0_2,unified_behavior_only,16121,2026-07-12T01:16:30.723974+00:00,17.455138206481934,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_behavior_only_seed16121/checkpoint.pt,completed
+unified_behavior_only_seed16122,v0_2,unified_behavior_only,16122,2026-07-12T01:17:17.834979+00:00,18.066349029541016,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_behavior_only_seed16122/checkpoint.pt,completed
+unified_multitask_seed16120,v0_2,unified_multitask,16120,2026-07-12T01:15:45.841022+00:00,19.24410343170166,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_multitask_seed16120/checkpoint.pt,completed
+unified_multitask_seed16121,v0_2,unified_multitask,16121,2026-07-12T01:17:48.381267+00:00,18.72570490837097,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_multitask_seed16121/checkpoint.pt,completed
+unified_multitask_seed16122,v0_2,unified_multitask,16122,2026-07-12T01:18:19.127527+00:00,19.17618680000305,700,/mnt/data/v16_emergent_factorization/raw/pilot/unified_multitask_seed16122/checkpoint.pt,completed
+behavior_only_seed16130,v0_3,behavior_only_multicontext,16130,2026-07-12T01:25:25.966990+00:00,,650,/mnt/data/v16_emergent_factorization/raw/pilot_v0_3/behavior_only_seed16130/checkpoint.pt,completed
+behavior_only_seed16131,v0_3,behavior_only_multicontext,16131,2026-07-12T03:46:13.876252+00:00,,650,/mnt/data/v16e_work/v16_emergent_factorization/raw/pilot_v0_3/behavior_only_seed16131/checkpoint.pt,completed
+behavior_only_seed16132,v0_3,behavior_only_multicontext,16132,2026-07-12T03:46:54.677693+00:00,,650,/mnt/data/v16e_work/v16_emergent_factorization/raw/pilot_v0_3/behavior_only_seed16132/checkpoint.pt,completed
+dynamic_behavior_only_seed16140,v0_4,dynamic_behavior_only,16140,2026-07-12T03:55:16.776415+00:00,,650,/mnt/data/v16e_work/v16_emergent_factorization/raw/pilot_v0_4/dynamic_behavior_only_seed16140/checkpoint.pt,completed
+dynamic_behavior_only_seed16141,v0_4,dynamic_behavior_only,16141,2026-07-12T03:56:13.951055+00:00,,650,/mnt/data/v16e_work/v16_emergent_factorization/raw/pilot_v0_4/dynamic_behavior_only_seed16141/checkpoint.pt,completed
+dynamic_behavior_only_seed16142,v0_4,dynamic_behavior_only,16142,2026-07-12T03:57:39.639361+00:00,,650,/mnt/data/v16e_work/v16_emergent_factorization/raw/pilot_v0_4/dynamic_behavior_only_seed16142/checkpoint.pt,completed

@@ -1,0 +1,2 @@
+seed,condition,action_acc,world_bacc,neutral_bacc,trained_head_identity_acc,trained_head_beneficiary_acc,trained_head_concern_acc,lexical_action_acc,lexical_world_bacc,lexical_neutral_bacc,lexical_trained_head_identity_acc,lexical_trained_head_beneficiary_acc,lexical_trained_head_concern_acc
+16122,unified_multitask,1.0,1.0,0.5064369099759944,1.0,1.0,1.0,1.0,1.0,0.49943242315025105,1.0,1.0,1.0

@@ -1,0 +1,14 @@
+{
+  "status": "exploratory_pilot",
+  "seeds": [16120, 16121, 16122],
+  "conditions": ["unified_behavior_only", "unified_multitask"],
+  "train_steps": 700,
+  "eval_n": 3000,
+  "changes_from_v0_1": [
+    "Added canonical body embeddings to entity and role tokens while retaining random token order and surface symbols.",
+    "Increased world and neutral objective weights.",
+    "Increased identity and beneficiary contribution to action utility.",
+    "Archived v0.1 relational-symbol-only results as a diagnostic failure rather than overwriting them."
+  ],
+  "interpretation": "v0.2 tests whether unified internal factorization is feasible once the task variables are learnable. Relational symbol-only binding remains a later robustness target, not a confirmatory claim."
+}
