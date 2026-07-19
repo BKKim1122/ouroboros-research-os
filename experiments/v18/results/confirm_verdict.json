@@ -1,0 +1,42 @@
+{
+  "experiment_id": "V18-axis-discovery",
+  "confirmed_by": "김병관",
+  "ts": "2026-07-19T19:54:03",
+  "freeze_verified": true,
+  "mock": false,
+  "discovery_model": "MA2",
+  "granted": {
+    "E": 3,
+    "H": 0
+  },
+  "human_gate_approved": false,
+  "reasons": [
+    "MA2: 구조 1.00 >= 0.75, MA1 미충족 → 4분할은 부분적 부과물 (H-A 약화, 반증 아님)",
+    "자율범위 상한(E3) — E4 승격은 인간 승인 필요 (cli approve --gate claim_promotion)"
+  ],
+  "claim_text": "자기관련 구조는 실재하나 우리 4분할이 아니라 더 적은 축(예: 이득∪이해관계 병합)으로 조직된다. 4번째 경계는 부분적 부과물(H-A 약화, 반증 아님).",
+  "audit_summary": {
+    "endpoint": "discovery",
+    "verdict": "MA2 (H-A 약화, 반증 아님) — 구조 1.00, ma1 0.50<0.75",
+    "struct_frac": 1.0,
+    "ma1_frac": 0.5,
+    "lexical_any": false,
+    "consistency_min": 0.75,
+    "merge_evidence": {
+      "bene_conc_cos_mean": 0.77,
+      "modal_merge_frac": 0.625,
+      "ari_merged_ge_split_frac": 1.0
+    }
+  },
+  "merge_evidence": {
+    "bene_conc_cos_mean": 0.77,
+    "modal_merge_frac": 0.625,
+    "ari_merged_ge_split_frac": 1.0
+  },
+  "allowed_statement": "사전학습 LLM의 자기관련 변이 공간의 내재적 축 구조(축 수·경계·요인 정합도)를 기술할 수 있다.\n",
+  "forbidden_statements": [
+    "AI가 자기 또는 알아차림을 체험한다",
+    "발견된 축이 인간 현상학적 범주와 동일하다",
+    "발견 축으로 선택적 인과제어가 가능하다"
+  ]
+}

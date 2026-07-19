@@ -34,6 +34,39 @@ def adjudicate(ledger: Ledger, spec: dict, audit_summary: dict,
     cap_e = min(ceiling["max_e_level"], envelope.get("promote_cap_e", 5))
     reasons, granted_e = [], proposed_e
 
+    if audit_summary.get("endpoint") == "discovery":
+        # V18 무감독 발견: discover.py의 봉인 기준이 이미 MA1/MA2/MA3을 산출했다.
+        # 거버너는 재판정하지 않고 사전등록 consistency로 대입 + 천장/인간게이트만 적용한다.
+        cons = float(audit_summary.get(
+            "consistency_min", spec.get("stats", {}).get("consistency_min", 0.75)))
+        ma1_frac = float(audit_summary.get("ma1_frac", 0.0))
+        struct_frac = float(audit_summary.get("struct_frac", 0.0))
+        lexical = bool(audit_summary.get("lexical_any", False))
+        if lexical:
+            model = "MA1_blocked_lexical"
+            reasons.append("어휘교락 플래그 — 군집이 템플릿 골격을 따름, MA1 불가")
+        elif ma1_frac >= cons:
+            model = "MA1"
+            reasons.append(f"MA1: 요인정합+모든쌍분리 seed비율 {ma1_frac:.2f} >= {cons}")
+        elif struct_frac >= cons:
+            model = "MA2"
+            reasons.append(f"MA2: 구조 {struct_frac:.2f} >= {cons}, MA1 미충족 "
+                           "→ 4분할은 부분적 부과물 (H-A 약화, 반증 아님)")
+        else:
+            model = "MA3"
+            reasons.append(f"MA3: 구조 {struct_frac:.2f} < {cons} (군집구조 null 이하)")
+        granted_e = min(proposed_e, ceiling["max_e_level"])
+        if granted_e > cap_e and not human_approved:
+            granted_e = cap_e
+            reasons.append(f"자율범위 상한(E{cap_e}) — E{proposed_e} 승격은 인간 승인 필요 "
+                           "(cli approve --gate claim_promotion)")
+        granted_h = min(proposed_h, ceiling["max_h_level"])
+        return {"endpoint": "discovery", "discovery_model": model,
+                "granted_e": granted_e, "granted_h": granted_h,
+                "allowed_statement": ceiling["allowed_statement"],
+                "forbidden_statements": ceiling["forbidden_statements"],
+                "reasons": reasons}
+
     if audit_summary.get("endpoint") == "emergence":
         # 창발 주장: 행렬 specificity 규칙 대신 사전 등록 기준 충족 여부로 판정
         if audit_summary["verdict"] != "PASS":

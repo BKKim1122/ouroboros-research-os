@@ -1,42 +1,83 @@
 experiment_id: V18-axis-discovery
 question: >
-  라벨을 강요하지 않았을 때, 사전학습 LLM의 자기관련 변이 공간은
-  실제로 몇 개의 축으로, 어떤 경계로 조직되어 있는가? (V17 H-A 검증)
-  그리고 발견된 '모델 고유 축'으로 개입하면 선택적 제어가 가능한가?
+  라벨을 강요하지 않았을 때, 사전학습 LLM의 자기관련 변이 공간은 실제로 몇 개의
+  축으로, 어떤 경계로 조직되어 있는가? 발견된 자연 군집이 우리가 손으로 정의한
+  4요인 경계와 일치하는가? (V17 결정 B / H-A 검증)
+  ※ steering(선택적 제어)은 V17에서 E4 실패했으므로 V18 봉인에서 제외 —
+    H-C 후속 실험으로 분리(아래 followups 참조).
 
 competing_models:
-  - MA1_our_4factors      # 자연 군집이 4요인 경계와 일치 (높은 ARI)
-  - MA2_fewer_axes        # 더 적은 축 (예: 대명사 + 이해득실 + 특권의 3축)
-  - MA3_no_factor_structure  # 공용축 외 군집 구조 없음
+  - MA1_our_4factors         # 자연 군집이 4요인 경계와 정합 (ARI 높음)
+  - MA2_fewer_or_other_axes  # 구조는 있으나 다른 조직 (예: beneficiary∪concern 병합)
+  - MA3_no_factor_structure  # 실루엣이 null과 구분 불가 (군집 구조 없음)
 
-discriminating_predictions:
-  - "차이벡터 군집의 최적 k와 요인 라벨과의 ARI가 세 모형을 구분"
-  - "beneficiary–concern이 한 군집으로 병합되면 MA2 (파일럿 cos 0.72의 예측)"
-  - "발견된 축 기반 steering의 specificity > 라벨 축 기반 (H-C 동시 검증)"
+# ── 봉인 판정 기준 (METHODS_STANDARD §1, null-상대). 결과 관측 전 고정, 실행 후 대입만. ──
+# discover.py가 이 블록을 읽어 판정문을 코드로 대입 출력한다(사람이 사후 수정 금지).
+discovery:
+  k_grid: [2, 3, 4, 5, 6]
+  null_R: 1000                 # N1(라벨순열)·N2(공분산매칭 가우시안) 반복수, R>=1000
+  sil_alpha: 0.05              # best_k 게이트: 실루엣 > N2의 (1 - alpha/|k_grid|)=0.99 백분위(Bonferroni)
+  ari_null_pct: 0.99          # MA1 조건: ARI(요인) > N1 라벨순열 null의 99 백분위
+  # δ (ARI(요인)-ARI(템플릿) 최소 격차) — [사전등록 결정 1]
+  delta_mode: null_calibrated  # 권장: 공동셔플 |ARI(요인')-ARI(템플릿')|의 백분위로 δ 산출
+  delta_null_pct: 0.95        #   (실제 격차가 우연 격차 95pct를 넘어야 인정)
+  delta_fixed: 0.10           # delta_mode: fixed 로 바꿀 때만 사용하는 대안 고정값
+  pair_sep_null_pct: 0.95     # 요인쌍 분리도(LOO 최근접중심) > 라벨셔플 null 95pct 여야 '분리'로 인정
+  ari_eval_k: 4               # MA1은 argmax가 아니라 가설기수 k=4에서 평가한다
+  consistency_min: 0.75       # 확증: MA1 조건 충족 seed 비율 >= 0.75 (V17 등록값 재사용, 같은 construct)
 
-primary_hypotheses:
-  - 자기관련 변이 공간에 2개 이상의 분리 가능한 축이 존재한다
-failure_hypotheses:
-  - 군집이 템플릿 골격을 따라 형성되면 어휘 교란 (통제: 골격 라벨과의 ARI 병행 보고)
+# 판정 로직(봉인) — V18 파일럿(seed 0-2)에서 '느슨한 MA1' 결함을 잡아 조인 확증 기준:
+#   MA1 = 아래 4조건 전부(k=4에서 평가):
+#     (1) 구조 존재       : >=1 k가 실루엣 N2 게이트 통과
+#     (2) k=4 우연 이상   : k=4가 N2 실루엣 게이트 통과      ← '4로 조직되나'
+#     (3) 요인 정합·비어휘 : ARI(요인)@4 > N1 99pct AND ARI(요인)-ARI(템플릿) >= δ
+#     (4) 4요인 실재      : 6개 요인쌍 전부 LOO분리 > null 95pct (특히 beneficiary|concern)
+#   MA2 = (1)은 참이나 (2)(3)(4) 중 미충족 (예: k=4 우연 이하 / bene∪conc 병합 / 쌍 분리 실패)
+#         → 우리 4분할은 부분적 부과물. **H-A 약화지 반증 아님**(가드레일 V18 사전봉인).
+#   MA3 = (1) 실패 (어느 k도 게이트 미통과)
+#   어휘교락 = ARI(템플릿)@4 > ARI(요인)@4 → MA1 불가
+#   ※ ARI 0.2~0.4의 '우연 이상 상관'을 '4요인 조직'으로 도장찍던 파일럿 결함을 (2)(4)가 차단.
 
-kill_criteria:
-  - "실루엣 점수가 모든 k에서 무작위 기준선과 구분 불가 시 MA3 채택 후 종료"
+interpretation_sealed:
+  MA1: "모델의 자연 군집이 우리 4요인과 정합 → 4요인 구조 강화 (여전히 E<=4/H0)"
+  MA2: "구조는 있으나 다른 조직(병합 등) → 우리 분류는 부분적 부과물 (H-A 약화, 반증 아님)"
+  MA3: "군집 구조 자체가 null과 구분 불가 → 자기관련 변이는 저차원 공용축 위주"
+  note: "'약화'와 '반증'을 구분 표기. 사후 서사 금지, ARI/실루엣 수치로만 말한다."
 
-controls: [person_control, template_family_labels, shuffled_labels]
-seeds: [0, 1, 2, 3, 4, 5, 6, 7]
-metrics: [best_k, silhouette, ari_vs_factors, ari_vs_templates, pca_var_explained]
-analysis_plan: "discover.py (파일럿) → 파일럿 후 확증 기준 사전 등록 예정"
-compute_budget: {gpu_hours: 4}
+# seed 분리 (METHODS_STANDARD §4): pilot ∩ confirmatory = ∅
+pilot_seeds: [0, 1, 2]                                   # 파이프라인·null 분포 검증용(승격 없음)
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]    # [사전등록 결정 2] 판정용, V17 확증(3-10)과도 disjoint
+
+metrics: [best_k, silhouette, ari_vs_factors, ari_vs_templates, pca_dim90]
 stats:
   min_confirmatory_seeds: 8
-  effect_size_min: 2.0
-  multiple_comparison: "확증 기준 확정 시 등록"
-  gpu_tolerance: "metric 상대오차 1e-2"
+  consistency_min: 0.75
+
+# 거버너 endpoint (METHODS_STANDARD §5): 확증 승격은 discovery 경로 + freeze 경유.
+# 기존 emergence 경로에 억지 매핑 금지. (엔드포인트 코드는 파일럿 검증 후 배선)
+governor_endpoint: discovery
+
 claim_ceiling:
   max_e_level: 4
   max_h_level: 0
   allowed_statement: >
-    사전학습 LLM의 자기관련 변이 공간의 내재적 축 구조를 기술할 수 있다.
+    사전학습 LLM의 자기관련 변이 공간의 내재적 축 구조(축 수·경계·요인 정합도)를 기술할 수 있다.
   forbidden_statements:
     - AI가 자기 또는 알아차림을 체험한다
     - 발견된 축이 인간 현상학적 범주와 동일하다
+    - 발견 축으로 선택적 인과제어가 가능하다   # steering은 별도 H-C, 이 실험 주장 아님
+
+followups:   # 이번 봉인에서 분리된 것 (goalpost moving 차단 — 현 판정에 소급 금지)
+  - H-C: "발견 축 기반 steering의 specificity > 라벨 축 기반 (V17 E4 실패의 별도 재검)"
+
+# freeze() 호환 키 (ouroboros/freeze.py 참조). 확증 봉인 스냅샷.
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+kill_criteria:
+  endpoint: discovery
+  eval_k: 4
+  MA1: "구조존재 AND ARI(요인)@4>N1 99pct AND ARI-격차>=δ AND 6쌍 전부 LOO분리>null 95pct; consistency>=0.75"
+  MA2: "구조존재하나 MA1 미충족(bene∪conc 병합/쌍분리 실패) — H-A 약화, 반증 아님"
+  MA3: "어느 k도 실루엣 N2 게이트 미통과"
+  lexical_flag: "ARI(템플릿)@4 > ARI(요인)@4 → MA1 불가"
+  k4_gate_role: diagnostic
+  merge_diagnostics: report_only

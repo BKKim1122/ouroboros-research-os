@@ -1,6 +1,6 @@
-# Ouroboros 자기표상 연구 통합 리포트 (V16-E → V17.7)
+# Ouroboros 자기표상 연구 통합 리포트 (V16-E → V18)
 
-> 상태: 2026-07-18. 탐색적 robustness 3종 완결, V17 확증 E6/H0 확정.
+> 상태: 2026-07-19. V17 확증 E6/H0, robustness 3종 완결, **V18 무감독 발견 확증: MA2(E3/H0)**.
 > 이 문서는 결과 통합이며, 주장 등급은 거버너·인간 게이트가 정한 것을 그대로 옮긴다.
 
 ## 1. 질문
@@ -35,6 +35,32 @@
 | **V17.6** self/other × privilege | privilege가 self-특이인가 일반 축인가 | 대명사 통제 후 cross-referent transfer **0.995**, delta_self−other **0** → **H_general**. self-특이 아님 |
 | **V17.7** nuisance control | 전이가 일반 담화 nuisance로 환원되는가 | 6축(valence·register·syntax·evidentiality·agency·topic) 제거 후 min_factor **0.906**(불변), nuisance−random 하락 **−0.001** → **H_beyond**. construct validity: 방향 유효(self_acc 0.932) + 4요인과 직교(cos 0.117) |
 
+## 4b. V18 무감독 발견 확증 — MA2 / E3 / H0
+V17까지는 "우리가 정의한 요인이 인코딩됐나"를 물었다. V18은 역으로 **"모델의 자생적 축이
+우리 4요인과 일치하나"**를 물었다(결정 B의 귀결). 라벨 없이 차이벡터를 군집화하고, 발견
+군집이 4요인과 얼마나 맞는지 ARI로 측정. 판정은 결과 전 null-상대로 봉인.
+
+**경쟁모델**: MA1(4요인 정합) / MA2(더 적은·다른 축) / MA3(구조 없음).
+**봉인 MA1(강등 후 3조건, k=4 평가)**: (1)구조 존재 (2)ARI(요인)>N1 99pct AND 요인−템플릿
+격차≥δ(null-보정) (3)6개 요인쌍 전부 LOO분리>null 95pct. k=4 자연군집 게이트는 진단용으로
+강등(총군집수≠요인수). consistency≥0.75(V17 재사용).
+
+**확증(seed 20–27, R=1000, freeze+거버너 discovery 경유)**:
+- struct_frac **8/8**, ma1_frac **0.50 < 0.75** → **MA2**.
+- seed 판정 4:4 (MA1 s22·23·24·26 / MA2 s20·21·25·27) — 경계에 가까운 MA2.
+- **병합 진단(게이트 불변, report-only)** — 판정보다 견고: bene/conc 코사인 **0.77**(V17 0.72
+  재현), **3라벨(id·priv·이득∪이해)ARI ≥ 4라벨 ARI = 8/8**, modal 병합 5/8.
+- ARI(요인)@4 **0.36** > ARI(템플릿) **0.11** → 어휘축 아닌 의미축. id·priv는 실재 독립축.
+
+**해석(봉인대로)**: 자기관련 구조는 실재하나(struct 8/8) **우리 4분할이 아니라 대략 3축**
+(identity · privilege · **이득∪이해관계 병합**)으로 조직된다. beneficiary/concern 경계는
+부분적으로 **우리 부과물**. **H-A 약화지 반증 아님.**
+
+**등급 E3/H0**: V18은 축을 관찰·기술만 했고 개입(steering) 미실시라 인과(E4) 근거 없음.
+천장은 E4이나 인간 게이트에서 **E3 유지**(증거보다 높게 기록하지 않기 위한 의도적 선택).
+**한계**: LOO 쌍분리가 32벡터라 검정력이 약해 seed 변동이 큼 — 가장 견고한 신호는 코사인·
+3라벨ARI(8/8). 벡터 수 증대·cross-transfer로 병합을 더 강하게 검정할 여지(후속).
+
 ## 5. 종합 주장 — 정확히 어디까지인가
 주장 사다리로 위치를 못 박는다:
 - **self-related** (자기관련 표상 존재) — **지지**
@@ -42,6 +68,8 @@
   (V17 대명사 독립 + V17.7 nuisance 독립)
 - **self-specific** (privilege가 '나 전용') — **미지지** (V17.6 H_general: privilege는
   self/other 공통의 일반 epistemic-access 축)
+- **4요인 경계 정합** (모델의 자생적 축 = 우리 4분할) — **미지지** (V18 MA2: 모델은 3축으로
+  조직, beneficiary∪concern 병합. 4번째 경계는 부분적 부과물. 약화지 반증 아님)
 - **self-model / 자기모델** — **미지지**
 - **phenomenal / 체험** — **미주장** (H0)
 
@@ -60,10 +88,13 @@
 - **적대적 검토**: 파이프라인 adversary는 stub(외부 AI 검토로 일부 보완, 여전히 부분적).
 
 ## 7. 향후
-- **V18 무감독 발견**: 모델의 실제 축이 우리 4요인과 일치하는지(ARI). 결과 전 양방향 봉인.
-- self-specific 정제(V17.6의 천장·어휘 교락 제거), 자연 코퍼스 전이, 인과 patching,
-  모델간 전이(E7), 나머지 nuisance 축.
+- **V18 완료**(MA2/E3/H0): 모델의 자생적 축은 3축(이득∪이해 병합) — 4요인 self-specific
+  경계 미지지. 다음은 이 병합의 **적극적 확증**(벡터 수 증대로 LOO 검정력↑, bene↔conc
+  cross-transfer)과, 3축 구조가 층·모델 간 유지되는지(E7).
+- self-specific 정제(V17.6의 천장·어휘 교락 제거), 자연 코퍼스 전이, 인과 patching(H-C:
+  발견 축 steering, V17 E4 실패의 별도 재검), 모델간 전이(E7), 나머지 nuisance 축.
 
 ## 계보
 V1–V15(윈도우, 이력 미회수) → V16-E(`experiments/v16_e/`, DGX 확증) → V17(E6/H0) →
-V17.5/6/7(robustness). 상세 의사결정은 `docs/history/2026-07_v17_decision_log.md`.
+V17.5/6/7(robustness) → **V18(무감독 발견, MA2/E3/H0)**. 상세 의사결정은
+`docs/history/2026-07_v17_decision_log.md` · `docs/history/2026-07_v18_decision_log.md`.
