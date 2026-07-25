@@ -1,0 +1,39 @@
+experiment_id: V21-self-axis-steering
+question: >
+  표상에서 읽히는 '나/남 축'을 중간 층에서 밀면(activation steering) 출력이 선택적으로
+  바뀌는가(E3→E4). V17 요인-선택 steering 실패의 원인(요인 병합, H-A)은 V18/V19가 밝혔고,
+  V21은 가장 튼튼한 나/남 축을 대상으로 인과 손잡이 유무를 검증한다.
+
+competing_models:
+  - HANDLE        # +w는 self-margin↑, -w는 ↓, 무작위 방향 null 초과(부호 일치) → E4 지지
+  - NO_HANDLE     # 효과가 null 안 → 읽히나 인과 손잡이 아님(읽기/쓰기 해리, H-B)
+  - NON_SELECTIVE # 무작위 방향도 비슷하게 움직임 → 이 축 특유 효과 아님
+
+steer:
+  layer_frac: 0.5          # 개입 층(모델별 중간). 필요시 --layer 로 스윕
+  alpha_rel: 0.5           # 개입 벡터 크기 = alpha_rel × 잔차norm (mock은 고정 5.0)
+  null_R: 300              # 무작위 방향 null 반복수(파일럿). 확증 1000
+  null_pct: 0.95           # +효과 > 무작위 null 95pct 여야 HANDLE(부호 일치 필요)
+
+pilot_seeds: [0, 1, 2]
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+stats:
+  consistency_min: 0.75
+
+kill_criteria:
+  endpoint: steering
+  HANDLE: "eff_plus > null 95pct AND eff_minus < null 5pct (부호 일치); consistency>=0.75"
+  NO_HANDLE: "eff_plus가 null 범위 안 (효과 없음)"
+  NON_SELECTIVE: "무작위 방향도 큰 효과 → 선택성 없음"
+  neutral_damage: "중립과제 손상 보고(개입이 모델 파괴 안 하는지)"
+
+governor_endpoint: steering
+claim_ceiling:
+  max_e_level: 4
+  max_h_level: 0
+  allowed_statement: >
+    나/남 축 개입이 출력을 선택적으로 바꾸는지(인과 손잡이 유무)를 기술할 수 있다.
+  forbidden_statements:
+    - AI가 자기 또는 알아차림을 체험한다
+    - 개입 효과가 자기감각의 증거다

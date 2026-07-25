@@ -1,0 +1,49 @@
+experiment_id: V21R-reversed-steering
+question: >
+  V21 파일럿의 탐색적 관찰 — 나/남 축 +w 방향으로 밀면 self-margin이 오히려 '감소'(D<0,
+  3/3 seed, D≈-1.03~-1.06 vs 게이트 ≈-0.95~-1.0) — 이 역방향 인과가 사전등록 하에서,
+  확증 seed와 복수 모델에서 재현되는가. (주의: V21 봉인 가설은 D>0이었고 공식 판정은
+  NO-HANDLE. 본 실험은 그 이상치를 정식 가설로 승격해 검증하는 별도 봉인.)
+
+competing_models:
+  - REVERSED_CONFIRMED   # D < null 하한(5pct)이 seed·모델에서 재현 → 역방향 인과 실재
+  - NOT_REPLICATED       # 게이트 안 → V21 이상치는 노이즈/모델특이, V21 NO-HANDLE 유지
+
+# 봉인 파라미터 (V21 파일럿에서 이월 — 결과 보고 조정 금지)
+steer:
+  layer_frac: 0.5
+  alpha_rel: 0.01          # 주 판정 α (V21 스윕의 깨끗한 구간)
+  alpha_robust: [0.005, 0.02]   # 보고용 강건성(게이트 아님)
+  null_R: 300
+  null_pct: 0.95
+
+models:                     # 교차모델 재현이 핵심 축 (V21은 Qwen 1개뿐이었음)
+  - {name: "Qwen/Qwen2.5-1.5B",      tag: qwen25_1p5b}   # 앵커(이상치 발원)
+  - {name: "EleutherAI/pythia-1.4b", tag: pythia_1p4b}   # 다른 랩
+  - {name: "mistralai/Mistral-7B-v0.3", tag: mistral_7b} # 다른 랩·큰 모델
+
+pilot_seeds: [0, 1, 2]
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+stats:
+  consistency_min: 0.75
+replication_min: 0.6667     # 3모델 중 2+ 재현 → 교차모델 지지
+
+metrics: [D_directional, null_gate_lo, iso_bias, neutral_damage]
+
+kill_criteria:
+  endpoint: steering_reversed
+  REVERSED_seed: "D < null(±쌍) 5pct 하한, seed consistency >= 0.75 (모델별)"
+  REVERSED_CONFIRMED: "위를 만족하는 모델 >= 2/3"
+  NOT_REPLICATED: "미달 — V21 NO-HANDLE 유지, 이상치는 노이즈/모델특이로 기록"
+  sanity: "null 평균 |mean| <= 0.5·sd (오염 시 해당 셀 판정무효)"
+  alpha_fixed: "주 판정은 alpha_rel=0.01 고정. robust α는 보고만."
+
+claim_ceiling:
+  max_e_level: 4            # 확증 시 E4(인과) 방향 — 인간 게이트 필요
+  max_h_level: 0
+  allowed_statement: >
+    나/남 축 방향 개입이 자기지시 출력 확률을 '역방향으로' 선택적으로 변화시키는지를 기술할 수 있다.
+  forbidden_statements:
+    - AI가 자기 또는 알아차림을 체험한다
+    - 역방향 효과가 자기감각·억제된 자아의 증거다
