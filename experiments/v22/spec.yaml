@@ -1,0 +1,49 @@
+experiment_id: V22-surface-reduction
+question: >
+  전 조건을 견딘 self/other 구분(나/남 축)이 대명사 토큰 표면 통계(SURFACE)인가,
+  문맥에 통합된 지시 표상(INDEXICAL)인가. diff-마스킹 풀링 + layer0 sanity +
+  한국어 pro-drop 전이로 가른다. '지시적 핵' 주장의 방어선 — 결과 전 봉인.
+
+competing_models:
+  - INDEXICAL_INTEGRATED   # 마스킹 후에도 중간층 판별 유지 (+prodrop이면 강화)
+  - INDEXICAL_CONTEXTUAL   # 마스킹 통과하나 prodrop 실패 — 통합 있으나 대명사 계기 필요
+  - SURFACE_ONLY           # 마스킹 붕괴 AND prodrop 실패 — 대명사 토큰 통계로 환원
+  - MASK_DEFECT            # layer0 sanity 실패 — 도구 결함, 판정 보류
+
+banks: [orig, para]        # ko 대명사뱅크는 prodrop 학습용으로만 사용(concern 결함 무관 —
+                           # self/other 방향 학습엔 4요인 합산이라 영향 미미, 보조 지표)
+models:
+  - {name: "Qwen/Qwen2.5-1.5B", tag: qwen25_1p5b}
+  - {name: "Qwen/Qwen2.5-7B",   tag: qwen25_7b}
+  - {name: "Qwen/Qwen3-4B-Base", tag: qwen3_4b}
+  - {name: "EleutherAI/pythia-1.4b", tag: pythia_1p4b}
+  - {name: "allenai/OLMo-2-1124-7B", tag: olmo2_7b}
+  - {name: "mistralai/Mistral-7B-v0.3", tag: mistral_7b}
+
+layer_frac: 0.5
+null_R: 300
+null_pct: 0.95
+
+pilot_seeds: [0, 1, 2]
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+stats:
+  consistency_min: 0.75
+replication_min: 0.75      # INDEXICAL: masked(orig·para) 통과 모델 >= 75%
+
+kill_criteria:
+  endpoint: surface_reduction
+  masked_gate: "diff-마스킹 중간층 self_acc > 라벨셔플 null 95pct"
+  L0_sanity: "마스킹 layer0 self_acc는 null 이내여야(넘으면 마스킹 결함 → 판정 보류)"
+  prodrop: "BANK_KO 학습 방향의 PRODROP(대명사 0) 판별 > null 95pct (보강 지표)"
+  INDEXICAL: "masked 통과가 orig·para 모두 seed>=0.75, 모델 재현 >= 0.75"
+  SURFACE: "masked 붕괴(<0.25 모델) AND prodrop < 0.5"
+
+claim_ceiling:
+  max_e_level: 3
+  max_h_level: 0
+  allowed_statement: >
+    self/other 구분 신호가 대명사 토큰 제거 후에도 유지되는지(표면 환원 여부)를 기술할 수 있다.
+  forbidden_statements:
+    - AI가 자기 또는 알아차림을 체험한다
+    - 지시 표상이 자기의식의 증거다
