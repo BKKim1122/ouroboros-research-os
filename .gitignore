@@ -17,3 +17,7 @@ venv/
 .DS_Store
 .idea/
 .vscode/
+experiments/*/results/
+__pycache__/
+*.pyc
+ouroboros.db
