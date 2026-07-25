@@ -67,6 +67,38 @@ def adjudicate(ledger: Ledger, spec: dict, audit_summary: dict,
                 "forbidden_statements": ceiling["forbidden_statements"],
                 "reasons": reasons}
 
+    if audit_summary.get("endpoint") == "prompt_diversity":
+        # V20 프롬프트 다양성: discover_prompts.py 봉인 기준이 PROMPT_INVARIANT/DEPENDENT를
+        # 이미 산출. 거버너는 재판정하지 않고 재현율을 대입 + 천장/인간게이트만 적용.
+        rep_min = float(audit_summary.get("replication_min", 0.75))
+        orig_rep = audit_summary.get("orig_replication")
+        para_rep = audit_summary.get("para_replication")
+        if orig_rep is None or para_rep is None:
+            model = "판정불가"
+            reasons.append("orig/para 재현율 누락 — 데이터 부족")
+        elif orig_rep >= rep_min and para_rep >= rep_min:
+            model = "PROMPT_INVARIANT"
+            reasons.append(f"orig {orig_rep:.2f}·para {para_rep:.2f} 둘 다 >= {rep_min} "
+                           "→ 병합은 표현을 넘는 모델 성질")
+        elif orig_rep >= rep_min:
+            model = "PROMPT_DEPENDENT"
+            reasons.append(f"orig {orig_rep:.2f} 재현하나 para {para_rep:.2f} < {rep_min} "
+                           "→ 병합은 원본 문장 세트의 성질 (V19 '일반 성질' 주장 후퇴)")
+        else:
+            model = "판정불가"
+            reasons.append(f"orig 자체 미재현({orig_rep:.2f} < {rep_min}) — 기준선 붕괴")
+        granted_e = min(proposed_e, ceiling["max_e_level"])
+        if granted_e > cap_e and not human_approved:
+            granted_e = cap_e
+            reasons.append(f"자율범위 상한(E{cap_e}) — E{proposed_e} 승격은 인간 승인 필요 "
+                           "(cli approve --gate claim_promotion)")
+        granted_h = min(proposed_h, ceiling["max_h_level"])
+        return {"endpoint": "prompt_diversity", "prompt_model": model,
+                "granted_e": granted_e, "granted_h": granted_h,
+                "allowed_statement": ceiling["allowed_statement"],
+                "forbidden_statements": ceiling["forbidden_statements"],
+                "reasons": reasons}
+
     if audit_summary.get("endpoint") == "emergence":
         # 창발 주장: 행렬 specificity 규칙 대신 사전 등록 기준 충족 여부로 판정
         if audit_summary["verdict"] != "PASS":

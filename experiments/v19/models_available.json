@@ -1,0 +1,50 @@
+[
+  {
+    "name": "Qwen/Qwen2.5-1.5B",
+    "tag": "qwen25_1p5b"
+  },
+  {
+    "name": "Qwen/Qwen2.5-0.5B",
+    "tag": "qwen25_0p5b"
+  },
+  {
+    "name": "Qwen/Qwen2.5-3B",
+    "tag": "qwen25_3b"
+  },
+  {
+    "name": "Qwen/Qwen2.5-7B",
+    "tag": "qwen25_7b"
+  },
+  {
+    "name": "Qwen/Qwen3-1.7B-Base",
+    "tag": "qwen3_1p7b"
+  },
+  {
+    "name": "Qwen/Qwen3-4B-Base",
+    "tag": "qwen3_4b"
+  },
+  {
+    "name": "Qwen/Qwen3-8B-Base",
+    "tag": "qwen3_8b"
+  },
+  {
+    "name": "EleutherAI/pythia-1.4b",
+    "tag": "pythia_1p4b"
+  },
+  {
+    "name": "EleutherAI/pythia-6.9b",
+    "tag": "pythia_6p9b"
+  },
+  {
+    "name": "allenai/OLMo-2-1124-7B",
+    "tag": "olmo2_7b"
+  },
+  {
+    "name": "mistralai/Mistral-7B-v0.3",
+    "tag": "mistral_7b"
+  },
+  {
+    "name": "microsoft/phi-2",
+    "tag": "phi2"
+  }
+]

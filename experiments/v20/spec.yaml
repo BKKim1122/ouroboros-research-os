@@ -1,0 +1,57 @@
+experiment_id: V20-prompt-diversity
+question: >
+  V19의 ben∪conc 병합(12/12 모델)이 '모델의 성질'인가, 아니면 '영어·단일저자 프롬프트 하나'의
+  성질인가. 같은 4요인·같은 self/other 구조를 orig(원본)/para(영어 재표현)/ko(한국어)로 만들어
+  모델×뱅크 격자에서 cross-transfer 병합이 뱅크를 넘어 재현되는지 본다. 결과 전 봉인.
+
+competing_models:
+  - PROMPT_INVARIANT   # 병합이 orig AND para에서 재현 → 모델 성질(영어 재표현에도 유지)
+  - PROMPT_DEPENDENT   # orig엔 있으나 para에서 무너짐 → 원본 문장 특유(주장 후퇴)
+
+banks: [orig, para]   # ko는 concern 재작성 후 별도 확증(감사에서 결함 확인)   # para=핵심 통제(같은 언어 다른 문장), ko=보너스(다른 언어)
+
+# 대상 모델: V19에서 병합 강했던 대표군. para는 전체, ko는 다국어 능력 모델 위주(자동 게이트).
+models:
+  - {name: "Qwen/Qwen2.5-1.5B", tag: qwen25_1p5b}
+  - {name: "Qwen/Qwen2.5-7B",   tag: qwen25_7b}
+  - {name: "Qwen/Qwen3-4B-Base", tag: qwen3_4b}
+  - {name: "EleutherAI/pythia-1.4b", tag: pythia_1p4b}
+  - {name: "allenai/OLMo-2-1124-7B", tag: olmo2_7b}
+  - {name: "mistralai/Mistral-7B-v0.3", tag: mistral_7b}
+
+layer_fracs: [0.3, 0.4, 0.5, 0.6, 0.7]
+null_R: 1000
+
+cross_transfer:            # V19와 동일 기준 재사용
+  self_acc_null_pct: 0.95
+  transfer_null_pct: 0.95
+  specificity_null_pct: 0.95
+
+pilot_seeds: [0, 1, 2]
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+
+stats:
+  consistency_min: 0.75
+replication_min: 0.75      # 뱅크별: self_acc 통과 모델의 >=75%에서 병합 → 그 뱅크 '재현'
+
+kill_criteria:
+  endpoint: prompt_diversity
+  self_acc_gate: "뱅크별 self_acc > null 95pct 아니면 (모델×뱅크) 제외(능력부족≠병합없음)"
+  MERGE: "t(ben↔conc) > null 95pct AND 병합특이도(공유축제거) >= margin"
+  PROMPT_INVARIANT: "orig·para 둘 다 병합 재현율 >= 0.75"
+  PROMPT_DEPENDENT: "orig 재현하나 para 무너짐"
+  ko_note: "다국어 능력 모델 한정, 능력부족은 self_acc서 제외"
+
+governor_endpoint: prompt_diversity
+claim_ceiling:
+  max_e_level: 4
+  max_h_level: 0
+  allowed_statement: >
+    자기관련 3축 구조(특히 beneficiary/concern 병합)가 프롬프트 표현·언어를 넘어 유지되는지를 기술할 수 있다.
+  forbidden_statements:
+    - AI가 자기 또는 알아차림을 체험한다
+    - 발견 축으로 선택적 인과제어가 가능하다
+
+# freeze() 호환 키
+metrics: [self_acc, t_ben_conc, merge_specificity, merge_confirmed_frac]

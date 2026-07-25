@@ -1,0 +1,101 @@
+experiment_id: V19-crossmodel-merge
+question: >
+  V18에서 Qwen2.5-1.5B(layer 12) 하나에서 발견한 "3축 조직(beneficiary∪concern 병합)"이
+  (a) 다른 모델·다른 층에서도 재현되는가(E7 방향), (b) ben↔conc 병합이 'LOO로 못 갈라서'가
+  아니라 '실제로 같은 축을 공유해서'임을 cross-transfer로 직접 확증할 수 있는가.
+  ※ 개입(steering)은 여전히 범위 밖(H-C). V19도 관찰·기술 + 전이 검증까지.
+
+competing_models:          # 각 (모델×층) 및 격자 집계에 적용
+  - MA1_our_4factors        # 4요인 정합 (6쌍 전부 분리, ben/conc 포함)
+  - MA2_three_axes          # 3축: ben∪conc 병합 (V18 발견)
+  - MA3_no_factor_structure # 구조 없음
+
+# ── 대상 모델 (fetch_models.py로 실재·base·safetensors 확인 완료. 전부 게이트 없음) ──
+# base vs instruct 혼합 금지. GGUF(LM Studio)는 transformers 잔차추출 불가 → HF 원본만.
+# 파일럿은 대표 6개(●)로 빠르게, 확증은 12개 전체로. 부분집합은 러너 --models 로.
+models:
+  - {name: "Qwen/Qwen2.5-1.5B",      tag: qwen25_1p5b}   # ● V17/V18 기준(앵커)
+  - {name: "Qwen/Qwen2.5-0.5B",      tag: qwen25_0p5b}   #   크기축 하단
+  - {name: "Qwen/Qwen2.5-3B",        tag: qwen25_3b}     #   크기축
+  - {name: "Qwen/Qwen2.5-7B",        tag: qwen25_7b}     # ● 크기축 상단
+  - {name: "Qwen/Qwen3-1.7B-Base",   tag: qwen3_1p7b}    #   세대축(Qwen3)
+  - {name: "Qwen/Qwen3-4B-Base",     tag: qwen3_4b}      # ● 세대축(최신)
+  - {name: "Qwen/Qwen3-8B-Base",     tag: qwen3_8b}      #   세대축 상단
+  - {name: "EleutherAI/pythia-1.4b", tag: pythia_1p4b}   # ● 랩축(EleutherAI, 완전공개)
+  - {name: "EleutherAI/pythia-6.9b", tag: pythia_6p9b}   #   랩축
+  - {name: "allenai/OLMo-2-1124-7B", tag: olmo2_7b}      # ● 랩축(AllenAI, 데이터공개)
+  - {name: "mistralai/Mistral-7B-v0.3", tag: mistral_7b} # ● 랩축(Mistral)
+  - {name: "microsoft/phi-2",        tag: phi2}          #   랩축(Microsoft)
+# 파일럿 대표 6개 실행 예:
+#   bash run_v19_pilot.sh --models qwen25_1p5b qwen25_7b qwen3_4b pythia_1p4b olmo2_7b mistral_7b
+
+layer_fracs: [0.3, 0.4, 0.5, 0.6, 0.7]   # 모델마다 최적 층 달라 스윕 (한 층만 보면 불공정)
+
+# ── self_acc sanity gate (교락 차단) ──
+# 각 (모델×층)에서 self극 vs other극이 애초에 판별되는가. 통과 못 하면 축 발견에서 제외
+# (그 모델이 이 영어·단일저자 프롬프트에 약한 것 ≠ 3축 아님, 을 분리).
+self_acc_gate: true
+
+# ── 봉인 판정 기준 (null-상대, 결과 전 고정, METHODS_STANDARD §1) ──
+discovery:                 # v18 코어 재사용 (동일 파라미터)
+  k_grid: [2, 3, 4, 5, 6]
+  null_R: 1000
+  sil_alpha: 0.05
+  ari_null_pct: 0.99
+  delta_mode: null_calibrated
+  delta_null_pct: 0.95
+  pair_sep_null_pct: 0.95
+  consistency_min: 0.75
+
+cross_transfer:            # ben↔conc 병합 직접 확증
+  self_acc_null_pct: 0.95        # self_acc > 라벨셔플 null 95pct 여야 게이트 통과
+  transfer_null_pct: 0.95        # ben↔conc 전이 > self/other 셔플 null 95pct
+  specificity_margin_mode: null_calibrated  # 병합특이도 = t(ben↔conc) - t(ben/conc↔id·priv)
+  specificity_null_pct: 0.95     #   distinct쌍 전이 셔플 분포의 95pct를 margin으로
+  # 판정:
+  #   MERGE_CONFIRMED : t(ben↔conc) > transfer_null AND 병합특이도 >= margin
+  #                     → ben/conc는 같은 축 공유(직접 증거). V18 병합을 확증.
+  #   MERGE_UNSUPPORTED: 위 미충족 → 병합은 검정력 부족(V18 후퇴 가능)
+
+# ── 격자 집계 판정 ──
+grid_verdict:
+  # (모델×층) 중 self_acc 통과분만 집계. 층은 모델별 '최적층'(self_acc 최고) 1점으로 대표.
+  replication_min: 0.75    # MA2(3축)+MERGE가 self_acc통과 모델의 >=75%에서 성립 → 'E7 방향: 교차모델 일반화' 지지
+  #   < 0.75 → Qwen 특이 가능성(모델 의존). 어느 쪽이든 봉인대로 보고.
+
+# seed 분리 (METHODS_STANDARD §4)
+pilot_seeds: [0, 1, 2]
+confirmatory_seeds: [20, 21, 22, 23, 24, 25, 26, 27]
+seeds: [20, 21, 22, 23, 24, 25, 26, 27]   # freeze 호환
+
+metrics: [self_acc, best_k, ari_vs_factors, pair_sep_min, t_ben_conc, merge_specificity]
+stats:
+  min_confirmatory_seeds: 8
+  consistency_min: 0.75
+
+kill_criteria:             # freeze 스냅샷
+  endpoint: discovery_crossmodel
+  self_acc_gate: "self_acc > null 95pct 아니면 (모델×층) 제외"
+  MA1: "6쌍 전부 분리(v18 기준) — 4요인 정합"
+  MA2: "ben∪conc 병합 (v18 기준) — 3축"
+  MA3: "구조 없음"
+  MERGE_CONFIRMED: "t(ben↔conc) > null 95pct AND 병합특이도 >= margin(null-보정)"
+  replication: "MA2+MERGE가 self_acc통과 모델의 >=0.75 → E7 방향 지지"
+  merge_diagnostics: report_only
+
+governor_endpoint: discovery   # 거버너 discovery 경로 재사용
+
+claim_ceiling:
+  max_e_level: 4
+  max_h_level: 0
+  allowed_statement: >
+    복수 사전학습 LLM의 자기관련 변이 공간의 축 구조(축 수·경계·요인 정합도·모델간 재현)와
+    beneficiary/concern 축 공유 여부를 기술할 수 있다.
+  forbidden_statements:
+    - AI가 자기 또는 알아차림을 체험한다
+    - 발견된 축이 인간 현상학적 범주와 동일하다
+    - 발견 축으로 선택적 인과제어가 가능하다
+
+followups:
+  - H-C: "발견 축 기반 steering (V17 E4 실패의 별도 재검)"
+  - instruct arm: "동일 모델 instruct판과 base 비교 (별도 arm, 교락 분리)"
